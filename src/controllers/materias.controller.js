@@ -114,3 +114,29 @@ export async function deleteMateria(request, response, next) {
         return next(error);
     }
 }
+
+/**
+ * Obtiene las tareas de una materia perteneciente a un usuario específico.
+ *
+ * @async
+ * @function getTareasByMateriaId
+ * @param {Object} request - Objeto de solicitud HTTP.
+ * @param {Object} response - Objeto de respuesta HTTP.
+ * @param {Function} next - Función para continuar con el middleware de errores.
+ *
+ * @returns {Promise<void>} Respuesta HTTP con las tareas de la materia.
+ */
+export async function getTareasByMateriaId(request, response, next) {
+    try {
+        const id = validateMateriaId(request.params.id);
+
+        const tareas = await materiasService.getTareasByMateriaId(
+            id,
+            request.user.id
+        );
+
+        return sendSuccess(response, tareas);
+    } catch (error) {
+        return next(error);
+    }
+}

@@ -255,3 +255,27 @@ export async function deleteMateria(id, userId) {
 
     return result.affectedRows > 0;
 }
+
+/**
+ * Obtiene las tareas de una materia perteneciente a un usuario específico.
+ *
+ * @async
+ * @function getTareasByMateriaId
+ * @param {string|number} idMateria - Identificador único de la materia.
+ * @param {string|number} userId - Identificador único del usuario dueño de la materia.
+ *
+ * @returns {Promise<Array>} Lista de tareas asociadas a la materia.
+ */
+export async function getTareasByMateriaId(idMateria, userId) {
+    const [rows] = await pool.execute(
+        `SELECT t.*
+         FROM tarea t
+         INNER JOIN materia m ON t.id_materia = m.id_materia
+         WHERE t.id_materia = ?
+         AND m.id_usuario = ?
+         ORDER BY t.fecha_entrega ASC`,
+        [idMateria, userId]
+    );
+
+    return rows;
+}
