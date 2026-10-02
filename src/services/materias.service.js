@@ -250,3 +250,7 @@ async function ensureUniqueFields(userId, materia, excludeId) {
 export async function getTareasByMateriaId(idMateria, userId) {
     return materiasRepository.getTareasByMateriaId(idMateria, userId);
 }
+
+export async function listEventosByMateria(id, userId) {
+    return materiasRepository.findEventosByMateriaAndUserId(id, userId);
+}

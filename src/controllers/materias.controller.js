@@ -140,3 +140,18 @@ export async function getTareasByMateriaId(request, response, next) {
         return next(error);
     }
 }
+
+export async function listEventosByMateria(request, response, next) {
+    try {
+        const id = validateMateriaId(request.params.id);
+
+        const eventos = await materiasService.listEventosByMateria(
+            id,
+            request.user.id
+        );
+
+        return sendSuccess(response, eventos);
+    } catch (error) {
+        return next(error);
+    }
+}
